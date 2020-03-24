@@ -1,2 +1,2 @@
-# website-analyser
+# Website-Analyser
 an example for website analyser
