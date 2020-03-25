@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import validators
+import requests
 
 # This is for getting the arguments from the users
 parser = argparse.ArgumentParser(description="This is the WebSite Analyser by JVS-ALPHA")
@@ -17,6 +18,7 @@ else:
     check = -1
 
 if check == 1:
-    print("The work begin")
+    response = requests.get(url)
+    print(response.text)
 else:
     print("Error")
