@@ -2,6 +2,9 @@
 import argparse
 import validators
 import requests
+from urllib.parse import urlparse
+from bs4 import BeautifulSoup
+from bs4 import Comment
 
 # This is for getting the arguments from the users
 parser = argparse.ArgumentParser(description="This is the WebSite Analyser by JVS-ALPHA")
@@ -19,6 +22,7 @@ else:
 
 if check == 1:
     response = requests.get(url)
-    print(response.text)
+    parsed_data = BeautifulSoup(response.text,"html.parser")
+    print(parsed_data.find_all("form"))
 else:
     print("Error")
