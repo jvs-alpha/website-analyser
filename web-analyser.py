@@ -26,19 +26,27 @@ if check == 1:
     response = requests.get(url)
     parsed_data = BeautifulSoup(response.text,"html.parser")
 
+# GEtting the seperate vulnerable fields from the parsed html
     forms = parsed_data.find_all("form")
+    comments = parsed_data.find_all(string = lambda text:isinstance(text,Comment))
+    password_inputs = parsed_data.find_all("input", {"name":"password"})
 
-    comments = parsed_data.find_all(string=lambda text:isinstance(text,Comment))
-
+# THis is the cheking if they are vulnerable
     for form in forms:
         if (form.get("action").find("https") < 0) and (urlparse(url).scheme != "https"):
             form_is_secure = False
             report += "Form Issue: Insecure Form actio " + form.get("action") + " Found in WebSite \n"
         else:
             form_is_secure = True
+
     for comment in comments:
         if comment.find("key: ") > -1:
             report += "Comment Issue: Key is found in the html\n"
+
+    for password_input in password_inputs:
+        if password_input.get("type") != "password":
+            report += "INput Issue: Plaintext passwd input found. Please change to password type in input \n"
+
 else:
     print("Error")
 print(report)
