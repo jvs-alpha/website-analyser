@@ -7,11 +7,18 @@ from bs4 import BeautifulSoup
 from bs4 import Comment
 
 # This is for getting the arguments from the users
-parser = argparse.ArgumentParser(description="This is the WebSite Analyser by JVS-ALPHA")
+parser = argparse.ArgumentParser(description="This is the WebSite Analyser by JVS-ALPHA") # THis is for initialtion of the argument parser
 parser.add_argument("-v","--version",action="version",version="%(prog)s 1.0")
+# if we use the "-" before the variable then the variable becomes optional
+parser.add_argument("-c","--config",type=str,help="Path to the Configuration file")
 parser.add_argument("url",type=str,help="This is the URl of the WebSite")
-argv = parser.parse_args()
-url = argv.url
+# the above is a compulsary variable for parsing the variable
+argv = parser.parse_args()  # THis will parse the variable
+url = argv.url  # This is for getting the url
+
+if argv.config:
+    print("Using config file: " + argv.config + "\n")
+
 
 report = ""
 
@@ -49,4 +56,9 @@ if check == 1:
 
 else:
     print("Error")
-print(report)
+if report == "":
+    print("IT is secure")
+else:
+    print("Vulnerability Report is as follows:")
+    print("==================================\n")
+    print(report)
